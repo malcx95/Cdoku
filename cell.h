@@ -1,9 +1,12 @@
 #include <stdbool.h>
 
+#ifndef CELL_H
+#define CELL_H
+
 
 struct cell {
 
-    int value;
+    unsigned value;
     
     bool uncovered;
 
@@ -11,3 +14,5 @@ struct cell {
 
 struct cell* cell_init();
 void cell_destroy(struct cell* c);
+
+#endif
