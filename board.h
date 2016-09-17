@@ -22,4 +22,8 @@ bool cell_is_covered(unsigned x, unsigned y);
 
 void board_print(struct board* b);
 
+void board_create_sudoku(struct board* b);
+
+bool board_check_valid_sudoku(struct board* b);
+
 #endif

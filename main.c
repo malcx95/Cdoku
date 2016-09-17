@@ -7,5 +7,6 @@ int main(int argc, char* argv[]) {
     //endwin();
     struct board* main_board = board_init();
     board_print(main_board);
+    board_destroy(main_board);
     return 0;
 }
