@@ -41,8 +41,24 @@ void board_print(struct board* b) {
     printf("\n");
 }
 
+
+bool create_sudoku_help(struct board* b, unsigned x, unsigned y) {
+    if (x == BOARD_WIDTH - 1 && y == BOARD_WIDTH - 1) {
+        return true;
+    } else if (x == BOARD_WIDTH) {
+        return create_sudoku_help(b, 0, y + 1);
+    } else {
+        
+    }
+}
+
 void board_create_sudoku(struct board* b) {
-    
+
+    // TODO use the board's grid, send
+    // it to a helper function which starts at (0, 0).
+    // In the function, check if we reached the last square.
+    // If so, return true (valid sudoku).
+    // If 
 }
 
 bool check_square(struct board* b, unsigned x, unsigned y) {
