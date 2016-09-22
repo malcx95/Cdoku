@@ -41,6 +41,23 @@ void board_print(struct board* b) {
     printf("\n");
 }
 
+bool can_put_number_here(struct board* b, unsigned x, unsigned y, unsigned number) {
+    // TODO implement
+}
+
+void generate_int_permutation(unsigned* ints) {
+    for (unsigned i = 0; i < 9; ++i) {
+        ints[i] = i + 1;
+    }
+    
+    for (int i = 8; i >= 0; --i) {
+        int j = rand() % (i + 1);
+
+        int temp = ints[i];
+        ints[i] = ints[j];
+        ints[j] = temp;
+    }
+}
 
 bool create_sudoku_help(struct board* b, unsigned x, unsigned y) {
     if (x == BOARD_WIDTH - 1 && y == BOARD_WIDTH - 1) {
@@ -48,7 +65,17 @@ bool create_sudoku_help(struct board* b, unsigned x, unsigned y) {
     } else if (x == BOARD_WIDTH) {
         return create_sudoku_help(b, 0, y + 1);
     } else {
-        
+        unsigned ints[9];
+        generate_int_permutation(ints);
+        for (unsigned i = 0; i < 9; ++i) {
+            if (can_put_number_here(b, x, y, ints[i])) {
+                b->grid[x][y]->value = ints[i];
+                return create_sudoku_help(b, x + 1, y);
+            }
+            //TODO NOT DONE
+            // we did not find a valid number here, so backtrack
+            return false;
+        }
     }
 }
 
