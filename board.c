@@ -41,6 +41,10 @@ void board_print(struct board* b) {
     printf("\n");
 }
 
+/*
+ * Check if this row, this column and this square doesn't already contain the given number.
+ * Ignores zeros in the board.
+ */
 bool can_put_number_here(struct board* b, unsigned x, unsigned y, unsigned number) {
     // TODO implement
 }
@@ -60,8 +64,10 @@ void generate_int_permutation(unsigned* ints) {
 }
 
 bool create_sudoku_help(struct board* b, unsigned x, unsigned y) {
-    if (x == BOARD_WIDTH - 1 && y == BOARD_WIDTH - 1) {
+    // if we reached the end (x + 1), we have successfully filled a board.
+    if (x == BOARD_WIDTH && y == BOARD_WIDTH - 1) {
         return true;
+    // if we reached the end of the row, move to the next row
     } else if (x == BOARD_WIDTH) {
         return create_sudoku_help(b, 0, y + 1);
     } else {
@@ -70,12 +76,19 @@ bool create_sudoku_help(struct board* b, unsigned x, unsigned y) {
         for (unsigned i = 0; i < 9; ++i) {
             if (can_put_number_here(b, x, y, ints[i])) {
                 b->grid[x][y]->value = ints[i];
-                return create_sudoku_help(b, x + 1, y);
+
+                // if the rest of the board worked out, then return a sucess
+                if (create_sudoku_help(b, x + 1, y)) {
+                    return true;
+                } else {
+                    continue;
+                }
+
             }
-            //TODO NOT DONE
-            // we did not find a valid number here, so backtrack
-            return false;
         }
+        // we did not find a valid number here, remove the number you changed here and backtrack        b.
+        b->grid[x][y]->value = 0;
+        return false;
     }
 }
 
